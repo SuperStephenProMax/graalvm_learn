@@ -6,7 +6,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -16,6 +16,7 @@ jobs:
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
+          cache: 'maven'
 
       - name: Example step
         run: |
@@ -25,7 +26,7 @@ jobs:
       - name: Example step using Maven plugin  # https://graalvm.github.io/native-build-tools/latest/maven-plugin.html
         run: mvn native:compile -Pnative
       - name: Upload binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: helloworld-${{ matrix.os }}
+          name: demo-${{ matrix.os }}
           path: target/demo
